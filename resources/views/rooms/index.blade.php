@@ -8,63 +8,17 @@
     <div class="container-fluid">
            <h3 align="center">Tìm Kiếm</h3><br />   
        <div class="container-fluid">
-             <input type="text" name="country_name" id="country_name" class="form-control input-lg" placeholder="Enter Country Name" />
-            <div id="countryList"><br>
-             </div>
-        </div>  
-    </div><br>
-
-    <div class="container-fluid">
-           <a href="{{ url('rooms/create') }}">
+         <a href="{{ url('rooms/create') }}">
         <button id="add-new-rooms" type="button" class="btn btn-primary">Add New Rooms</button></a>
+             <input type="text" name="country_name" id="country_name" class="form-control input-lg" placeholder="Enter Country Name" />
+     
+        </div>
+    </div>  
 
-    <div class="container-fluid text-center">
-        <table class="list-room table-bordered">
-    
-            <thead>
-                <tr>
-                    <th>STT</th>
-                    <th>Name</th>
-                    <th>desc</th>
-                    <th>status</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                    <?php $index = 0; ?>
-                    @foreach($roomsList as $rooms)
-                <tr @if($index % 2 == 0) class="old" @else class="even" @endif>
-                    <td>
-                         @php($index++)
-                         {{ RoomsHelper::increment($index, $roomsList->perPage(), $roomsList->currentPage())}}
-                    </td>
-                    <td>{{ $rooms->name }}</td>
-                    <td>{{ $rooms->desc }}</td>
-                    <td>{{ RoomsHelper::getStatus($rooms->status) }}</td>
-                    <td id="button-option-edit-room">
-                        <button class="button-room"> 
-                        <a href="{{ url("rooms/$rooms->id/edit") }}">Edit</a>
-                    </button></td>
-                    <td id="button-option-del-room">
-                        <form action="{{ url('rooms/'.$rooms->id) }}" method="POST"> 
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                        
-                           <button class="button-room" type="submit" data-toggle="tooltip" title="Delete" data-placement="top" onclick="return confirm('bạn có thực sự muốn xóa ?'); ">Delete</button>
-                        </form>
-                    </tr>
-                </td>
-            @endforeach
-        </tbody>
-    </table>
-    </div>
- 
-<tbody>
 <div class="contaiter-fluid text-center">
     @php($index = 0)
     <div class="row bgr-book">
-        @foreach($roomsList as $Room)
+        @foreach($roomsList as  $rooms)
         @php($index++)
         <div class="col-lg-4 block">
                 <div class="row bgr-top-block">
@@ -72,11 +26,11 @@
                         <p>{{ RoomsHelper::increment($index, $roomsList->perPage(), $roomsList->currentPage())}}</p>
                     </div>
                     <div class="col-lg-7 ">
-                        <p>{{ RoomsHelper::getStatus($Room->status)}}</p>
+                        <p>{{ RoomsHelper::getStatus($rooms->status)}}</p>
                             
                         </div>
                     <div class="col-lg-3">
-                        <p>{{$Room->desc}}</p>
+                        <p>{{$rooms->desc}}</p>
                     </div>
                 </div>
 
@@ -93,7 +47,7 @@
                     </div>
 
                 </div>
-                <p>{{$Room->name}}</p>
+                <p>{{$rooms->name}}</p>
                 <div class="row">
                     <div id="button-option-edit-device" class="pull-left block-btn">
                         <button title="Edit" type="submit" value="Edit"><a href="{{ url('rooms') }}/{{$rooms->id}}/edit">Edit</a></button>
@@ -112,7 +66,6 @@
             
             @endforeach
         </div>
-</tbody>
     </div>
         {{ $roomsList}}
     
